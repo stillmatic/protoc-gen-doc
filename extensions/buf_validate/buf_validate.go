@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go/buf/validate"
-	"github.com/nvx/protoc-gen-doc/extensions"
+	"github.com/stillmatic/protoc-gen-doc/extensions"
 )
 
 // ValidateRule represents a single validator rule from the (validate.rules) method option extension.

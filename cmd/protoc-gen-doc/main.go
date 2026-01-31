@@ -19,10 +19,10 @@ import (
 	"log"
 	"os"
 
-	gendoc "github.com/nvx/protoc-gen-doc"
-	_ "github.com/nvx/protoc-gen-doc/extensions/buf_validate"    // imported for side effects
-	_ "github.com/nvx/protoc-gen-doc/extensions/google_api_http" // imported for side effects
-	_ "github.com/nvx/protoc-gen-doc/extensions/lyft_validate"   // imported for side effects
+	gendoc "github.com/stillmatic/protoc-gen-doc"
+	_ "github.com/stillmatic/protoc-gen-doc/extensions/buf_validate"    // imported for side effects
+	_ "github.com/stillmatic/protoc-gen-doc/extensions/google_api_http" // imported for side effects
+	_ "github.com/stillmatic/protoc-gen-doc/extensions/lyft_validate"   // imported for side effects
 )
 
 func main() {

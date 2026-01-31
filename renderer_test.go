@@ -4,9 +4,9 @@ import (
 	"os"
 	"testing"
 
-	. "github.com/nvx/protoc-gen-doc"
 	"github.com/pseudomuto/protokit"
 	"github.com/pseudomuto/protokit/utils"
+	. "github.com/stillmatic/protoc-gen-doc"
 	"github.com/stretchr/testify/require"
 )
 

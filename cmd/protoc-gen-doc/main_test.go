@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	. "github.com/nvx/protoc-gen-doc/cmd/protoc-gen-doc"
+	. "github.com/stillmatic/protoc-gen-doc/cmd/protoc-gen-doc"
 	"github.com/stretchr/testify/require"
 )
 

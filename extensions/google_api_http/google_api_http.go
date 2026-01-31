@@ -3,7 +3,7 @@ package extensions
 import (
 	"net/http"
 
-	"github.com/nvx/protoc-gen-doc/extensions"
+	"github.com/stillmatic/protoc-gen-doc/extensions"
 	"google.golang.org/genproto/googleapis/api/annotations"
 )
 

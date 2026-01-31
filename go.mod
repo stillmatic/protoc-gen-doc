@@ -1,4 +1,4 @@
-module github.com/nvx/protoc-gen-doc
+module github.com/stillmatic/protoc-gen-doc
 
 go 1.24.0
 
