@@ -2,6 +2,7 @@ package gendoc_test
 
 import (
 	"os"
+	"regexp"
 	"testing"
 
 	"github.com/pseudomuto/protokit"
@@ -52,4 +53,42 @@ func TestNewRenderTypeUnknown(t *testing.T) {
 	rt, err := NewRenderType("/some/template.tmpl")
 	require.Zero(t, rt)
 	require.Error(t, err)
+}
+
+// TestMarkdownNoMultipleBlankLines verifies that the markdown template does not
+// generate multiple consecutive blank lines (MD012 lint rule).
+func TestMarkdownNoMultipleBlankLines(t *testing.T) {
+	set, err := utils.LoadDescriptorSet("fixtures", "fileset.pb")
+	require.NoError(t, err)
+
+	req := utils.CreateGenRequest(set, "Booking.proto", "Vehicle.proto")
+	result := protokit.ParseCodeGenRequest(req)
+	template := NewTemplate(result)
+
+	output, err := RenderTemplate(RenderTypeMarkdown, template, "")
+	require.NoError(t, err)
+
+	// Write output to file for debugging
+	os.WriteFile("./tmp/test_output.md", output, 0644)
+
+	// Check for 3+ consecutive newlines (which would mean 2+ blank lines)
+	multipleBlankLines := regexp.MustCompile(`\n{3,}`)
+	matches := multipleBlankLines.FindAllStringIndex(string(output), -1)
+
+	if len(matches) > 0 {
+		// Find the context around each match for better error messages
+		outputStr := string(output)
+		for i, match := range matches {
+			start := match[0] - 50
+			if start < 0 {
+				start = 0
+			}
+			end := match[1] + 50
+			if end > len(outputStr) {
+				end = len(outputStr)
+			}
+			t.Errorf("Found multiple consecutive blank lines at position %d (match %d):\n...%s...",
+				match[0], i+1, outputStr[start:end])
+		}
+	}
 }

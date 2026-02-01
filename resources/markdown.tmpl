@@ -3,7 +3,7 @@
 
 ## Table of Contents
 {{range .Files}}
-{{$file_name := .Name}}- [{{.Name}}](#{{.Name | anchor}})
+{{- $file_name := .Name}}- [{{.Name}}](#{{.Name | anchor}})
   {{- if .Messages }}
   {{range .Messages}}  - [{{.LongName}}](#{{.FullName | anchor}})
   {{end}}
@@ -24,76 +24,80 @@
 - [Scalar Value Types](#scalar-value-types)
 {{range .Files}}
 {{- $file_name := .Name}}
-
 <a name="{{.Name | anchor}}"></a>
 <p align="right"><a href="#top">Top</a></p>
 
 ## {{.Name}}
+{{- if .Description}}
 {{.Description}}
-{{range .Messages -}}
-
+{{- end}}
+{{- range .Messages}}
 <a name="{{.FullName | anchor}}"></a>
 
 ### {{.LongName}}
+{{- if .Description}}
 {{.Description}}
-{{if .HasFields}}
+{{- end}}
+{{- if .HasFields}}
+
 | Field | Type | Label | Description |
 | ----- | ---- | ----- | ----------- |
 {{range .Fields -}}
-  | {{.Name}} | [{{.LongType}}](#{{.FullType | anchor}}) | {{.Label}} | {{if (index .Options "deprecated"|default false)}}**Deprecated.** {{end}}{{nobr .Description}}{{if .DefaultValue}} Default: {{.DefaultValue}}{{end}} |
-{{end}}
-{{- end}}
+| {{.Name}} | [{{.LongType}}](#{{.FullType | anchor}}) | {{.Label}} | {{if (index .Options "deprecated"|default false)}}**Deprecated.** {{end}}{{nobr .Description}}{{if .DefaultValue}} Default: {{.DefaultValue}}{{end}} |
+{{end -}}
+{{end -}}
 {{if .HasExtensions}}
 | Extension | Type | Base | Number | Description |
 | --------- | ---- | ---- | ------ | ----------- |
 {{range .Extensions -}}
-  | {{.Name}} | {{.LongType}} | {{.ContainingLongType}} | {{.Number}} | {{nobr .Description}}{{if .DefaultValue}} Default: {{.DefaultValue}}{{end}} |
-{{end}}
-{{- end}}
-{{end}} <!-- end messages -->
-{{range .Enums -}}
-
+| {{.Name}} | {{.LongType}} | {{.ContainingLongType}} | {{.Number}} | {{nobr .Description}}{{if .DefaultValue}} Default: {{.DefaultValue}}{{end}} |
+{{end -}}
+{{end -}}
+{{end -}}
+{{range .Enums}}
 <a name="{{.FullName | anchor}}"></a>
 
 ### {{.LongName}}
+{{- if .Description}}
 {{.Description}}
+{{- end}}
 
 | Name | Number | Description |
 | ---- | ------ | ----------- |
 {{range .Values -}}
-  | {{.Name}} | {{.Number}} | {{nobr .Description}} |
+| {{.Name}} | {{.Number}} | {{nobr .Description}} |
+{{end -}}
 {{end}}
-{{end}} <!-- end enums -->
-{{if .HasExtensions}}
-
+{{- if .HasExtensions}}
 <a name="{{$file_name | anchor}}-extensions"></a>
 
 ### File-level Extensions
+
 | Extension | Type | Base | Number | Description |
 | --------- | ---- | ---- | ------ | ----------- |
 {{range .Extensions -}}
-  | {{.Name}} | {{.LongType}} | {{.ContainingLongType}} | {{.Number}} | {{nobr .Description}}{{if .DefaultValue}} Default: `{{.DefaultValue}}`{{end}} |
-{{end}}
-{{- end}} <!-- end HasExtensions -->
-{{range .Services -}}
-
+| {{.Name}} | {{.LongType}} | {{.ContainingLongType}} | {{.Number}} | {{nobr .Description}}{{if .DefaultValue}} Default: `{{.DefaultValue}}`{{end}} |
+{{end -}}
+{{end -}}
+{{range .Services}}
 <a name="{{.FullName | anchor}}"></a>
 
 ### {{.Name}}
+{{- if .Description}}
 {{.Description}}
+{{- end}}
 
 | Method Name | Request Type | Response Type | Description |
 | ----------- | ------------ | ------------- | ------------|
 {{range .Methods -}}
-  | {{.Name}} | [{{.RequestLongType}}](#{{.RequestFullType | anchor}}){{if .RequestStreaming}} stream{{end}} | [{{.ResponseLongType}}](#{{.ResponseFullType | anchor}}){{if .ResponseStreaming}} stream{{end}} | {{nobr .Description}} |
+| {{.Name}} | [{{.RequestLongType}}](#{{.RequestFullType | anchor}}){{if .RequestStreaming}} stream{{end}} | [{{.ResponseLongType}}](#{{.ResponseFullType | anchor}}){{if .ResponseStreaming}} stream{{end}} | {{nobr .Description}} |
+{{end -}}
+{{end -}}
 {{end}}
-{{end}} <!-- end services -->
-{{end}}
-
 ## Scalar Value Types
 
 | .proto Type | Notes | C++ | Java | Python | Go | C# | PHP | Ruby |
 | ----------- | ----- | --- | ---- | ------ | -- | -- | --- | ---- |
 {{range .Scalars -}}
-  | <a name="{{.ProtoType | anchor}}" /> {{.ProtoType}} | {{.Notes}} | {{.CppType}} | {{.JavaType}} | {{.PythonType}} | {{.GoType}} | {{.CSharp}} | {{.PhpType}} | {{.RubyType}} |
+| <a name="{{.ProtoType | anchor}}" /> {{.ProtoType}} | {{.Notes}} | {{.CppType}} | {{.JavaType}} | {{.PythonType}} | {{.GoType}} | {{.CSharp}} | {{.PhpType}} | {{.RubyType}} |
 {{end}}
